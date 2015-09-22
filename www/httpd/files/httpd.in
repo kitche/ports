@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# $FreeBSD$
+#
+# PROVIDE: httpd
+# REQUIRE: DAEMON
+# BEFORE:  LOGIN
+# KEYWORD: shutdown
+
+# Add the following lines to /etc/rc.conf to enable httpd:
+# httpd_enable="YES"
+# httpd_flags="<set as needed>"
+
+. /etc/rc.subr
+
+name=httpd
+rcvar=httpd_enable
+
+command="%%PREFIX%%/sbin/httpd"
+
+httpd_enable=${httpd_enable:-"NO"}
+httpd_flags=${httpd_flags:-"-c %%PREFIX%%/etc/httpd.conf"}
+
+load_rc_config $name
+run_rc_command "$1"
